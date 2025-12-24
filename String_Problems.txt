@@ -1,0 +1,296 @@
+String Problems:
+------------------
+
+✅ 1. Remove all white spaces (spaces, tabs, new lines)
+✅ Method 1: Using charAt() and loop (NO inbuilt string methods)
+public class RemoveSpaces {
+    public static void main(String[] args) {
+        String str = "Ja va  Fu ll  Sta ck";
+        String result = "";
+
+        for (int i = 0; i < str.length(); i++) {
+            char ch = str.charAt(i);
+
+            if (ch != ' ') {   // ignore space
+                result = result + ch;
+            }
+        }
+
+        System.out.println(result);
+    }
+}
+
+✅ Method 2: Using StringBuilder (BEST interview answer)
+public class RemoveSpaces {
+    public static void main(String[] args) {
+        String str = "Ja va  Fu ll  Sta ck";
+        StringBuilder sb = new StringBuilder();
+
+        for (int i = 0; i < str.length(); i++) {
+            char ch = str.charAt(i);
+
+            if (ch != ' ') {
+                sb.append(ch);
+            }
+        }
+
+        System.out.println(sb.toString());
+    }
+}
+
+
+✅Move all special characters to the end of the string
+Input:  "Ja@va#12!De$"
+Output: "Java12De@#!$"
+
+✅ Corrected Code
+public class MoveSpecialChars {
+    public static void main(String[] args) {
+
+        String str = "Ja@va#12!De$";
+        StringBuilder normal = new StringBuilder();
+        StringBuilder special = new StringBuilder();
+
+        for (int i = 0; i < str.length(); i++) {
+            char ch = str.charAt(i);
+
+            // Check for alphabet or digit
+            if ((ch >= 'A' && ch <= 'Z') ||
+                (ch >= 'a' && ch <= 'z') ||
+                (ch >= '0' && ch <= '9')) {
+
+                normal.append(ch);
+            } else {
+                special.append(ch);
+            }
+        }
+
+        System.out.println(normal.toString() + special.toString());
+    }
+}
+
+✅ Corrected Code
+class Tester {
+
+    public static String moveSpecialCharacters(String str) {
+        if (str == null) {
+            return null;
+        }
+
+        StringBuilder normal = new StringBuilder();
+        StringBuilder special = new StringBuilder();
+
+        for (int i = 0; i < str.length(); i++) {
+            char ch = str.charAt(i);
+
+            // check alphabet characters
+            if ((ch >= 65 && ch <= 90) || (ch >= 97 && ch <= 122)) {
+                normal.append(ch);
+            } else {
+                special.append(ch);
+            }
+        }
+
+        return normal.toString() + special.toString();
+    }
+
+    public static void main(String args[]) {
+        String str = "He@#$llo!*&";
+        System.out.println(moveSpecialCharacters(str));
+    }
+}
+
+
+
+✅checkPalindrome(String str)
+class Tester {
+    public static boolean checkPalindrome(String str) {
+
+        if (str == null) {
+            return false;
+        }
+
+        String reverse = new StringBuilder(str).reverse().toString();
+
+        if (reverse.equals(str))
+            return true;
+
+        return false;
+    }
+
+    public static void main(String args[]) {
+        String str = "radar";
+
+        if (checkPalindrome(str))
+            System.out.println("The string is a palindrome!");
+        else
+            System.out.println("The string is not a palindrome!");
+    }
+}
+
+
+✅Reverse each word in the string passed to the method without changing the order of the words and return the modified string.
+Input : "Java is easy"
+Output: "avaJ si ysae"
+
+class Tester {
+
+    public static String reverseEachWord(String str) {
+
+        if (str == null) {
+            return null;
+        }
+
+        String[] words = str.split(" ");
+        StringBuilder result = new StringBuilder();
+
+        for (int i = 0; i < words.length; i++) {
+            String word = words[i];
+
+            // reverse the word
+            for (int j = word.length() - 1; j >= 0; j--) {
+                result.append(word.charAt(j));
+            }
+
+            // add space except after last word
+            if (i < words.length - 1) {
+                result.append(" ");
+            }
+        }
+
+        return result.toString();
+    }
+
+    public static void main(String args[]) {
+        String str = "Java is easy";
+        System.out.println(reverseEachWord(str));
+    }
+}
+
+
+✅Find the count of the highest occurring character in the string passed to the method and return the count.
+Input : "success"
+Counts: s=3, u=1, c=2, e=1
+Output : 3
+
+✅ Complete Code (Nested Loop Approach)
+class Tester {
+
+    public static int findHighestOccurrence(String str) {
+
+        if (str == null || str.length() == 0) {
+            return 0;
+        }
+
+        int maxCount = 0;
+
+        for (int i = 0; i < str.length(); i++) {
+            char current = str.charAt(i);
+            int count = 0;
+
+            for (int j = 0; j < str.length(); j++) {
+                if (str.charAt(j) == current) {
+                    count++;
+                }
+            }
+
+            if (count > maxCount) {
+                maxCount = count;
+            }
+        }
+
+        return maxCount;
+    }
+
+    public static void main(String args[]) {
+        String str = "success";
+        System.out.println(findHighestOccurrence(str));
+    }
+}
+
+
+✅Remove all the duplicate characters and white spaces from the string passed to the method and return the modified string.
+Input : "programming is fun"
+Output: "programisfun"
+
+
+✅ Method 1: Nested-loop logic (NO collections)
+class Tester {
+
+    public static String removeDuplicatesandSpaces(String str) {
+
+        if (str == null) {
+            return null;
+        }
+
+        StringBuilder result = new StringBuilder();
+
+        for (int i = 0; i < str.length(); i++) {
+            char ch = str.charAt(i);
+
+            // skip spaces
+            if (ch == ' ') {
+                continue;
+            }
+
+            boolean isDuplicate = false;
+
+            // check if character already exists in result
+            for (int j = 0; j < result.length(); j++) {
+                if (result.charAt(j) == ch) {
+                    isDuplicate = true;
+                    break;
+                }
+            }
+
+            if (!isDuplicate) {
+                result.append(ch);
+            }
+        }
+
+        return result.toString();
+    }
+
+    public static void main(String args[]) {
+        String str = "programming is fun";
+        System.out.println(removeDuplicatesandSpaces(str));
+    }
+}
+
+✅ Complete Code (Using HashSet)
+import java.util.HashSet;
+
+class Tester {
+
+    public static String removeDuplicatesandSpaces(String str) {
+
+        if (str == null) {
+            return null;
+        }
+
+        HashSet<Character> set = new HashSet<>();
+        StringBuilder result = new StringBuilder();
+
+        for (int i = 0; i < str.length(); i++) {
+            char ch = str.charAt(i);
+
+            // skip spaces
+            if (ch == ' ') {
+                continue;
+            }
+
+            // add only if not present
+            if (!set.contains(ch)) {
+                set.add(ch);
+                result.append(ch);
+            }
+        }
+
+        return result.toString();
+    }
+
+    public static void main(String args[]) {
+        String str = "programming is fun";
+        System.out.println(removeDuplicatesandSpaces(str));
+    }
+}
